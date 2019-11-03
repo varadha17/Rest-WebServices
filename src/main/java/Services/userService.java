@@ -12,7 +12,6 @@ public class userService {
 	public userService() {
 		
 		userDemo.put(1L, new Users(1,"Badri", "Narayanan", "Badri@gmail.com", "male", "inactive"));
-		userDemo.put(2L, new Users(2, "Ashwini","Kumar","Ashwini@gmail.com", "female", "active"));
 	}
 	
 	private Map<Long, Users> userDemo = DBModel.getDBUsers();
@@ -94,6 +93,44 @@ public class userService {
 		}
 		
 		return userdata;
+	}
+	
+	//status
+	public List<Users> getUserStatus(String status) {
+		
+		List<Users> userstatus = new ArrayList<>();
+		
+		for(Users us : userDemo.values()) {
+			
+			String user = us.getStatus();
+			
+			if(user.equalsIgnoreCase(status)) {
+				
+				userstatus.add(us);
+				
+			}
+		}
+		
+		return userstatus;
+		
+	}
+	
+	//Gender
+	public List<Users> getUserGender(String gender){
+		
+		List<Users> usergender = new ArrayList<>();
+		
+		for(Users us : userDemo.values()) {
+			
+			String user = us.getGender();
+			
+			if(user.equalsIgnoreCase(gender)) {
+				
+				usergender.add(us);
+			}
+		}
+		
+		return usergender;
 	}
 	
 	public Users getUserID(long id) {

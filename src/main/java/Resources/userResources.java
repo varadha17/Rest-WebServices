@@ -3,6 +3,7 @@ package Resources;
 
 import java.util.List;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -11,13 +12,13 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import Model.Users;
 import Services.userService;
+import subResourceFilter.FilterBean;
 
 @Path("/users")
 public class userResources {
@@ -26,15 +27,18 @@ public class userResources {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Users> getUser(@QueryParam("firstName") String first, @QueryParam("lastName") String last,
-							   @QueryParam("email") String email)
+	public List<Users> getUser(@BeanParam FilterBean filter)
 	{
-		if(email != null) {
-			return service.getUserWithEmailId(email);
-		}else if(first != null) {
-			return service.getUserwithFirstName(first);
-		}else if(last != null) {
-			return service.getUserWithLastName(last);
+		if(filter.getEmail() != null) {
+			return service.getUserWithEmailId(filter.getEmail());
+		}else if(filter.getFirst() != null) {
+			return service.getUserwithFirstName(filter.getFirst());
+		}else if(filter.getLast() != null) {
+			return service.getUserWithLastName(filter.getLast());
+		}else if(filter.getStatus() != null) {
+			return service.getUserStatus(filter.getStatus());
+		}else if(filter.getGender() !=null) {
+			return service.getUserGender(filter.getGender());
 		}
 		return service.getAllUser();
 	}
